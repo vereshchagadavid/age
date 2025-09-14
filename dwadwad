@@ -1,0 +1,25 @@
+class BankAccount:
+    def __init__(self, account_number, balance=0):
+        self.account_number = account_number
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        if amount <= self.balance:
+            self.balance -= amount
+        else:
+            print("Недостатньо коштів!")
+
+acc = BankAccount("UA123", 1000)
+print(acc.balance)   # 1000
+
+acc.deposit(500)
+print(acc.balance)   # 1500
+
+acc.withdraw(300)
+print(acc.balance)   # 1200
+
+acc.withdraw(2000)   # Недостатньо коштів!
+print(acc.balance)   # 1200

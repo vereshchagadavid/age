@@ -1,0 +1,60 @@
+class Task:
+    def __init__(self, name, description, deadline):
+        self.name = name
+        self.description = description
+        self.deadline = deadline
+        self.done = False   # False = не зроблено, True = зроблено
+
+    def mark_done(self):
+        self.done = True
+
+    def show(self):
+        if self.done:
+            status = "ЗРОБЛЕНО ✅"
+        else:
+            status = "НЕ ЗРОБЛЕНО ❌"
+        print(self.name, "-", self.description, "- дедлайн:", self.deadline, "-", status)
+
+
+class TaskManager:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task)
+
+    def remove_task(self, name):
+        for t in self.tasks:
+            if t.name == name:
+                self.tasks.remove(t)
+                break
+
+    def mark_task_done(self, name):
+        for t in self.tasks:
+            if t.name == name:
+                t.mark_done()
+                break
+
+    def show_all(self):
+        if len(self.tasks) == 0:
+            print("Немає завдань")
+        else:
+            for t in self.tasks:
+                t.show()
+
+
+manager = TaskManager()
+
+t1 = Task("Домашка", "Вивчити історію", "22.09.2025")
+t2 = Task("Прибрати", "Помити підлогу", "23.09.2025")
+
+manager.add_task(t1)
+manager.add_task(t2)
+
+print("Список завдань:")
+manager.show_all()
+
+print("\nВідмічаємо 'Домашка' як зроблене...\n")
+manager.mark_task_done("Домашка")
+
+manager.show_all()

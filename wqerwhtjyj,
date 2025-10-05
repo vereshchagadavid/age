@@ -1,0 +1,10 @@
+class MyIterable:
+    def __init__(self, n):
+        self.n = n
+
+    def __iter__(self):
+        return (i for i in range(self.n)) 
+
+obj = MyIterable(5)
+for x in obj:
+    print(x)

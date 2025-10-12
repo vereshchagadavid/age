@@ -1,0 +1,33 @@
+import sqlite3
+import datetime
+import requests
+
+conn = sqlite3.connect("weather.db")
+cur = conn.cursor()
+
+cur.execute("""
+CREATE TABLE IF NOT EXISTS weather (
+    date_time TEXT,
+    temperature REAL
+)
+""")
+
+city = "Calgary"
+url = f"https://wttr.in/{city}?format=%t"
+
+try:
+    temp = requests.get(url).text.strip()
+except:
+    temp = "N/A"
+
+
+now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+cur.execute("INSERT INTO weather (date_time, temperature) VALUES (?, ?)", (now, temp))
+conn.commit()
+
+print("Дані додано до бази!")
+print(f"Час: {now}, Температура: {temp}")
+
+conn.close()

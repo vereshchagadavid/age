@@ -1,0 +1,21 @@
+import requests
+
+url = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
+
+try:
+    data = requests.get(url).json()
+    usd = None
+    for item in data:
+        if item["cc"] == "USD":
+            usd = item["rate"]
+            break
+except:
+    usd = None
+
+if usd:
+    print(f"Курс долара: {usd} грн")
+    money = float(input("Скільки у тебе гривень? "))
+    result = money / usd
+    print(f"Це буде приблизно {round(result, 2)} доларів")
+else:
+    print("Не вдалося отримати курс :(")
